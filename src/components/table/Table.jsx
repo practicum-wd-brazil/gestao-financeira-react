@@ -1,17 +1,6 @@
 import TableRow from "./TableRow/TableRow";
-import api from "../../services/Api";
-import { useEffect, useState } from "react";
 
-const Table = () => {
-  const [records, setRecords] = useState([
-    {
-      _id: "123",
-      description: "something",
-      value: 12,
-      date: "2022-08-24",
-    },
-  ]);
-
+const Table = ({ records, onDelete }) => {
   return (
     <section>
       <h1>Lançamentos</h1>
@@ -25,7 +14,9 @@ const Table = () => {
         </thead>
         <tbody id="tbody">
           {records.map((record) => {
-            return <TableRow row={record} key={record._id} />;
+            return (
+              <TableRow row={record} key={record._id} onDelete={onDelete} />
+            );
           })}
         </tbody>
         <tfoot>

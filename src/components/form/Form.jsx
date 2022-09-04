@@ -1,24 +1,33 @@
 import Input from "../input/Input";
+import { useState } from "react";
 
-export default function Form() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log(event.target);
+export default function Form({ onSubmit, children }) {
+  const [error, setError] = useState(false);
+
+  const handleValidation = (event) => {
+    setError(!event.target.validity.valid);
   };
 
   return (
     <section>
-      <h1>Formulário</h1>
-      <form id="form" name="lancamentos" noValidate onSubmit={handleSubmit}>
-        <Input label="Data" idName="date" type="date" required />
-        <Input label="Descrição" idName="description" required />
+      {children}
+      <form id="form" name="lancamentos" noValidate onSubmit={onSubmit}>
+        <Input
+          label="Data"
+          idName="date"
+          type="date"
+          required
+          onInput={handleValidation}
+          error={error}
+        />
+        {/* <Input label="Descrição" idName="description" required />
         <Input
           label="Valor"
           idName="value"
           type="number"
           required
           step="0.01"
-        />
+        /> */}
         <div>
           <button id="submit" type="submit">
             Salvar

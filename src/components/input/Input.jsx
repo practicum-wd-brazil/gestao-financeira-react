@@ -1,9 +1,11 @@
-export default function Input({ label, idName, type, ...props }) {
+export default function Input({ label, idName, type, error, ...props }) {
   return (
     <label htmlFor={idName}>
       <span>{label}</span>
       <input type={type} id={idName} name={idName} {...props} />
-      <div className="form__error form__error_data"></div>
+      {error && (
+        <div className="form__error form__error_data">Campo obrigatório</div>
+      )}
     </label>
   );
 }

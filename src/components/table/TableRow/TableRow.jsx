@@ -1,5 +1,5 @@
-export default function TableRow({ row }) {
-  const { date, description, value } = row;
+export default function TableRow({ row, onDelete }) {
+  const { date, description, value, _id } = row;
 
   return (
     <tr>
@@ -7,7 +7,9 @@ export default function TableRow({ row }) {
       <td className="descricao">{description}</td>
       <td className="valor">{value}</td>
       <td>
-        <button className="btn-delete">Deletar</button>
+        <button onClick={() => onDelete(_id)} className="btn-delete">
+          Deletar
+        </button>
       </td>
       <td className="id"></td>
     </tr>
