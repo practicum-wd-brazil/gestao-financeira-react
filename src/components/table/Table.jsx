@@ -1,6 +1,6 @@
 import TableRow from "./TableRow/TableRow";
 
-const Table = ({ records, onDelete }) => {
+const Table = ({ records }) => {
   return (
     <section>
       <h1>Lançamentos</h1>
@@ -14,9 +14,7 @@ const Table = ({ records, onDelete }) => {
         </thead>
         <tbody id="tbody">
           {records.map((record) => {
-            return (
-              <TableRow row={record} key={record._id} onDelete={onDelete} />
-            );
+            return <TableRow row={record} key={record._id} />;
           })}
         </tbody>
         <tfoot>

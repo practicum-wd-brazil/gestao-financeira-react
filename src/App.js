@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, createContext } from "react";
 import "./App.css";
 import Form from "./components/form/Form";
 import Table from "./components/table/Table";
 import api from "./services/Api";
+
+export const DeleteContext = createContext();
 
 function App() {
   const [records, setRecords] = useState([]);
@@ -30,11 +32,12 @@ function App() {
 
   return (
     <main>
-      <button>Atualizar</button>
       <Form onSubmit={handleSubmit}>
         <h1>Formulário</h1>
       </Form>
-      <Table records={records} onDelete={handleDelete} />
+      <DeleteContext.Provider value={handleDelete}>
+        <Table records={records} />
+      </DeleteContext.Provider>
     </main>
   );
 }

@@ -1,4 +1,9 @@
-export default function TableRow({ row, onDelete }) {
+import { useContext } from "react";
+import { DeleteContext } from "../../../App";
+
+export default function TableRow({ row }) {
+  const handleDelete = useContext(DeleteContext);
+
   const { date, description, value, _id } = row;
 
   return (
@@ -7,7 +12,7 @@ export default function TableRow({ row, onDelete }) {
       <td className="descricao">{description}</td>
       <td className="valor">{value}</td>
       <td>
-        <button onClick={() => onDelete(_id)} className="btn-delete">
+        <button onClick={() => handleDelete(_id)} className="btn-delete">
           Deletar
         </button>
       </td>
