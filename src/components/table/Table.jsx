@@ -1,6 +1,8 @@
 import TableRow from "./TableRow/TableRow";
 
 const Table = ({ records }) => {
+  const total = records.reduce((acc, cur) => (acc += parseFloat(cur.value)), 0);
+
   return (
     <section>
       <h1>Lançamentos</h1>
@@ -20,7 +22,7 @@ const Table = ({ records }) => {
         <tfoot>
           <tr>
             <td colSpan="2">Total</td>
-            <td id="total">0</td>
+            <td id="total">{total}</td>
           </tr>
         </tfoot>
       </table>

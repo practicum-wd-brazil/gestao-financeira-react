@@ -1,33 +1,18 @@
-import { useEffect, useState, createContext } from "react";
 import "./App.css";
 import Form from "./components/form/Form";
 import Table from "./components/table/Table";
-import api from "./services/Api";
-
-export const DeleteContext = createContext();
+import { DeleteProvider } from "./contexts/DeleteProvider";
+import { UpdateProvider } from "./contexts/UpdateProvider";
+import { useRecords } from "./hooks/useRecords";
 
 function App() {
-  const [records, setRecords] = useState([]);
-
-  useEffect(() => {
-    api.getAll().then((apiRecords) => {
-      setRecords(apiRecords);
-    });
-  }, []);
+  const { records, saveRecord, deleteRecord, updateRecord } = useRecords();
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const formRecord = new FormData(event.target);
     const record = Object.fromEntries(formRecord.entries());
-    api.save(record).then((savedRecord) => {
-      setRecords([...records, savedRecord]);
-    });
-  };
-
-  const handleDelete = (id) => {
-    api.remove(id).then(() => {
-      setRecords(records.filter((record) => record._id !== id));
-    });
+    saveRecord(record);
   };
 
   return (
@@ -35,9 +20,11 @@ function App() {
       <Form onSubmit={handleSubmit}>
         <h1>Formulário</h1>
       </Form>
-      <DeleteContext.Provider value={handleDelete}>
-        <Table records={records} />
-      </DeleteContext.Provider>
+      <UpdateProvider value={updateRecord}>
+        <DeleteProvider value={deleteRecord}>
+          <Table records={records} />
+        </DeleteProvider>
+      </UpdateProvider>
     </main>
   );
 }
